@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Home - VATSIM Pakistan vACC</title>
+  <meta content="Welcome to VATSIM Pakistan vACC" name="description">
+  <meta property="og:image" content="/static/img/websiteuploads/PakvACC_logo.png"/>
+  <meta name="theme-color" content="#5c9f24">
+
+  <!-- Favicons -->
+  <link href="/static/img/websiteuploads/favicon.png" rel="icon">
+  <link href="/static/img/websiteuploads/favicon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <!-- Template Main CSS File -->
+  <link href="/static/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="/"><img src="/static/img/websiteuploads/PakvACC_logo.png" style="width: 120px; height: 50px;"
+          class="logo"></a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="/">Home</a></li>
+          <li class="dropdown"><a href="#"><span>INFO</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li class="dropdown"><a href="#"><span>Policies</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  {% for p in policies %}
+                  <li><a href="{{ p.policy_link }}" target="_blank">{{ p.policy_name }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li><a href="/about-us">About Us</a></li>
+              <li><a href="/airspace">Airspace</a></li>
+              <li><a href="/notams/all">NOTAMS</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href=""><span>Controllers</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/controllers/roster">Roster</a></li>
+              <li><a href="/controllers/solo-validations">Solo Validations</a></li>
+              <li><a href="/controllers/top">Top Controllers</a></li>
+              <li class="dropdown"><a href="#"><span>Resources</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="https://files.aero-nav.com/OPXX" target="_blank">Sector Files</a></li>
+                  <li class="dropdown"><a href="#"><span>vATIS Files</span> <i class="bi bi-chevron-right"></i></a>
+                    <ul>
+                      <li><a href="/controllers/resources/vatis/opis" target="_blank">OPIS - Islamabad</a></li>
+                      <li><a href="/controllers/resources/vatis/opla" target="_blank">OPLA - Lahore</a></li>
+                      <li><a href="/controllers/resources/vatis/opkc" target="_blank">OPKC - Karachi</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Pilots</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/airfields-info">Airfields Info</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="/contact-us">Contact Us</a></li>
+          {% if is_logged_in == "False" %}
+          <li><a class="getstarted scrollto" href="/auth/login">Login</a></li>
+          {% else %}
+          <li class="dropdown"><a class="getstarted scrollto" style="cursor: pointer;">Hello, {{ name }}<i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/my/profile">My Profile</a></li>
+              {% if check_admin == "True" %}
+              <li><a href="/admin">Administration</a></li>
+              {% endif %}
+              <li><a href="/auth/logout">Logout</a></li>
+            </ul>
+          </li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+    <div class="hero-container">
+      <div id="heroCarousel" data-bs-interval="9000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+        <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+        <div class="carousel-inner" role="listbox">
+
+          <!-- Slide 1 -->
+          <div class="carousel-item active" style="background-image: url('/static/img/websiteuploads/slider1.jpg');">
+            <div class="carousel-container">
+              <div class="carousel-content">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <div>{{message}}</div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <h2 class="txt-type" data-wait="1500"
+                  data-words='["Welcome To VATSIM Pakistan vACC", "ویٹسم پاکستان وی اے سی سی میں خوش آمدید"]'>
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="carousel-item" style="background: url(static/img/websiteuploads/slider2.jpg);">
+            <div class="carousel-container">
+              <div class="carousel-content">
+                <h2 class="txt-type"><span>Welcome To VATSIM Pakistan vACC</span></h2>
+                <p class="animate__animated animate__fadeInUp">We are a non profit community organization on the VATSIM
+                  Network dedicated to educating, and providing knowledge and services about Pakistan in the Flight
+                  Simulation World.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="carousel-item" style="background: url(/static/img/websiteuploads/slider3.jpg);">
+            <div class="carousel-background"></div>
+            <div class="carousel-container">
+              <div class="carousel-content">
+                <h2 class="txt-type"><span>ویٹسم پاکستان وی اے سی سی میں خوش آمدید</span></h2>
+                <p class="animate__animated animate__fadeInUp">We invite you as a controller or as a pilot to fly in
+                  Pakistan's diverse and serene landscape. Control ATC positions in bustling Karachi or negotiate with
+                  terrain on Islamabad approach.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+        </a>
+
+        <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+          <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+        </a>
+
+      </div>
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="row no-gutters">
+          <div id="imgg" style="margin-top: 30px;"
+            class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-lg-start">
+          </div>
+
+          <div class="col-xl-7 ps-0 ps-lg-5 pe-lg-1 d-flex align-items-stretch">
+            <div class="content d-flex flex-column justify-content-center">
+              <h3 style="text-align: center;" id="greeting">Greetings!</h3>
+              <div class="row">
+                <div class="col-md-6 icon-box">
+                  <i class="bi bi-blockquote-left" style="line-height: 1;"></i>
+                  <h4>Who are we?</h4>
+                  <p style="font-size: 13px;">Pakistan vACC is a part of West Asia Division in the Asia Pacific Region
+                    of the VATSIM Network.</p>
+                </div>
+                <div class="col-md-6 icon-box">
+                  <i class="bi bi-info-circle" style="line-height: 1;"></i>
+                  <h4>About us</h4>
+                  <p style="font-size: 13px;">We are responsible for the Air Traffic Control services in the airspace of
+                    the Islamic Republic Of Pakistan on the VATSIM Network.</p>
+                </div>
+                <div class="col-md-6 icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                    class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                      d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z" />
+                  </svg>
+                  <h4>What we strive to achieve?</h4>
+                  <p style="font-size: 13px;">We aim to provide a realistic and fun experience to people who fly in, out
+                    and around Pakistan on the VATSIM Network, by educating individuals with a keen interest and passion
+                    for aviation in the skills of an Air Traffic Controller and other relevant entities.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Counts Section ======= -->
+    <section id="counts" class="counts">
+      <div class="container">
+
+        <div class="row no-gutters">
+
+          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+            <div class="count-box">
+              <i class="bi bi-people-fill"></i>
+              <span data-purecounter-start="0" data-purecounter-end="{{ residents }}" data-purecounter-duration="1"
+                class="purecounter"></span>
+              <p><strong>Residents</strong></p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+            <div class="count-box">
+              <i class="fas fa-plane-arrival"></i>
+              <span data-purecounter-start="0" data-purecounter-end="{{ visitors }}" data-purecounter-duration="1"
+                class="purecounter"></span>
+              <p><strong>Visitors</strong></p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+            <div class="count-box">
+              <i class="bi bi-headset"></i>
+              <span data-purecounter-start="0" data-purecounter-end="{{ active_controllers }}"
+                data-purecounter-duration="1" class="purecounter"></span>
+              <p><strong>Active Air Traffic Controllers</strong></p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+            <div class="count-box">
+              <i class="bi bi-clock-history"></i>
+              <span data-purecounter-start="0" data-purecounter-end="{{ vacc_hours }}" data-purecounter-duration="1"
+                class="purecounter"></span>
+              <p><strong>ATS Hours This Month</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Counts Section -->
+    <!-- ======= Why Us Section ======= -->
+    <section id="why-us" class="why-us">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Online ATC</h2>
+          {% if len_controllers > 1 %}
+          <p>Imagine flying in the sky with no one to show you the way. Scary isn't it? Well, we got you covered. </p>
+          {% endif %}
+          {% if len_controllers == 1 %}
+          <p>Uh oh, looks like you gotta fly blind today. If you are looking for someone to show you the way check our
+            Discord to find them.</p>
+          {% endif %}
+        </div>
+
+        <div class="row">
+          {% if len_controllers > 1 %}
+          <table class="content-table">
+            <thead>
+              <tr>
+                <th>VATSIM ID</th>
+                <th>Controller</th>
+                <th>Station</th>
+                <th>Facility</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for controller in controllers %}
+              {% if controller.id != 1 %}
+              <tr>
+                <td>{{ controller.cid }}</td>
+                <td>{{ controller.controller_name }}</td>
+                <td>{{ controller.callsign }}</td>
+                <td>{{ controller.facility_name }}</td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+          {% endif %}
+          {% if len_controllers == 1 %}
+          <table class="content-table">
+            <thead>
+              <tr>
+                <th>VATSIM ID</th>
+                <th>Controller</th>
+                <th>Station</th>
+                <th>Facility</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Seems No One Is Online Yet</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+    <!-- End Why Us Section -->
+    <!-- NEWS -->
+    <div class="section-title">
+      <h2>NEWS</h2>
+      <p>Keep upto date with the latest news and information from Pakistan vACC</p>
+    </div>
+    <div class="containermain">
+      {% for n in news %}
+      {% if n.id != 1 %}
+      <a href="/news/{{ n.id }}">
+        <div class="column" style="margin-top: 35px;">
+          <!-- Post-->
+          <div class="post-module">
+            <!-- Thumbnail-->
+            <div class="thumbnail">
+              <img src="{{ n.banner_link }}">
+            </div>
+            <!-- Post Content-->
+            <div class="post-content">
+              <h1 class="title">{{ n.subject }}</h1>
+              <h6>Click to read more.</h6>
+              <div class="post-meta"><span class="timestamp"><i class="fa fa-user"></i>
+                  {{ n.created_by }}</span><br>
+                  <p><i class="fas fa-calendar-alt"></i> {{ n.time }}</p></div>
+            </div>
+          </div>
+        </div>
+      </a>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <br><br>
+    <div class="section-title">
+      <a href="/news/all"><button class="viewmorebutton">view more</button></a>
+    </div>
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+        <div class="section-title">
+          <h2>Media Gallery</h2>
+        </div>
+        <div class="row portfolio-container">
+          {% for u in uploads %}
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+              <img src="{{ u.link }}" class="img-fluid" alt="Img">
+              <div class="portfolio-info">
+                <div class="portfolio-links">
+                  <a href="{{ u.link }}" data-gallery="portfolioGallery"
+                    class="portfolio-lightbox" title="{{ u.name }}"><i class="bi bi-zoom-in"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <br>
+      <div class="section-title">
+        <a href="/media/all"><button class="viewmorebutton">view more</button></a>
+      </div>
+    </section><!-- End Portfolio Section -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Upcoming Events</h2>
+          {% if len_events > 0 %}
+          <p>We have fun filled events almost every week. What are you waiting for? Join in the fun!</p>
+          {% endif %}
+          {% if len_events == 0 %}
+          <br>
+          <h5>We have fun filled events almost every week. We are currently planning our next great event. Hold tight.
+          </h5>
+          {% endif %}
+        </div>
+
+        {% if len_events == 0 %}
+        <div class="row portfolio-container">
+          <div class="col-md-4 portfolio-item filter-app">
+          </div>
+          <div class="col-lg-4 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+              <img src="/static/img/websiteuploads/NOEVENT.png" class="img-fluid" alt="Event Banner">
+              <div class="portfolio-info">
+                
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 portfolio-item filter-app">
+          </div>
+        </div>
+        {% endif %}
+
+        {% if len_events == 1 %}
+        <div class="row portfolio-container">
+          <div class="col-md-4 portfolio-item filter-app">
+          </div>
+          {% for e in events_query %}
+          <div class="col-lg-4 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+              <img src="{{ e.event_banner }}" class="img-fluid" alt="Event Banner">
+              <div class="portfolio-info">
+                <h5>View Event Details</h5>
+                <div class="portfolio-links">
+                  <a href="{{ e.event_link }}" target="_blank" title="More Details"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <div class="col-md-4 portfolio-item filter-app">
+          </div>
+        </div>
+        {% endif %}
+        {% if len_events == 2 %}
+        <div class="row portfolio-container">
+          <div class="col-md-2 portfolio-item filter-app">
+          </div>
+          {% for e in events_query %}
+          <div class="col-lg-4 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+              <img src="{{ e.event_banner }}" class="img-fluid" alt="Event Banner">
+              <div class="portfolio-info">
+                <h5>View Event Details</h5>
+                <div class="portfolio-links">
+                  <a href="{{ e.event_link }}" target="_blank" title="More Details"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+        {% if len_events >= 3 %}
+        <div class="row portfolio-container">
+          {% for e in events_query %}
+          <div class="col-lg-4 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+              <img src="{{ e.event_banner }}" class="img-fluid" alt="Event Banner">
+              <div class="portfolio-info">
+                <h5>View Event Details</h5>
+                <div class="portfolio-links">
+                  <a href="{{ e.event_link }}" target="_blank" title="More Details"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      </div>
+    </section><!-- End Portfolio Section -->
+
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <img src="/static/img/websiteuploads/PakvACC_logo.png" style="width: 120px; height: 50px;">
+              <br>
+              <div class="social-links mt-3">
+                <a href="https://twitter.com/vatsimpakistan" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://www.facebook.com/vatsimpakistan" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/vatsimpakistan" class="instagram"><i
+                    class="bx bxl-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/about-us">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/contact-us">Contact us</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+            <script type="text/javascript"
+              src="//rf.revolvermaps.com/0/0/6.js?i=5g4sxx1dp47&amp;m=8&amp;c=baff00&amp;cr1=ff0000&amp;f=verdana&amp;l=1"
+              async="async"></script>
+          </div>
+        </div>
+      </div>
+      <p style="text-align: center; font-size: 13px;">Disclaimer: All materials contained herein are 
+        intended for the exclusive use of flight simulation only and not be used for real world applications. 
+        VATSIM Pakistan vACC is not affiliated with CAA or any real world aviation organization.</p>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        <p id="time" class="time">What time is it?</p>
+        &copy; Copyright <strong><span>VATSIM Pakistan vACC</span></strong>. All Rights Reserved <br><br>
+        <a href="//www.dmca.com/Protection/Status.aspx?ID=77696419-0390-47af-a188-c6f8cdc3da0a" target="_blank"
+          title="DMCA.com Protection Status" class="dmca-badge"> <img
+            src="https://images.dmca.com/Badges/dmca-badge-w100-5x1-06.png?ID=77696419-0390-47af-a188-c6f8cdc3da0a"
+            alt="DMCA.com Protection Status" /></a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+    class="bi bi-arrow-up-short"></i></a>
+  <img class="back1-to1-top1 d-flex align-items-center justify-content-center" src="/static/img/websiteuploads/santa.png">
+  <!-- Vendor JS Files -->
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/static/vendor/purecounter/purecounter.js"></script>
+  <script src="/static/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/static/js/main.js"></script>
+  <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js%22%3E"></script>
+  <script>
+    const utctime = document.getElementById('time')
+    function updatetime() {
+      const nowtime = new Date().toUTCString()
+
+      utctime.innerHTML = nowtime
+    }
+    setInterval(updatetime, 1000);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Administrator - VATSIM Pakistan vACC</title>
+  <meta content="VATSIM Pakistan vACC" name="description">
+  <meta property="og:image" content="/static/img/websiteuploads/PakvACC_logo.png" />
+  <meta name="theme-color" content="#5c9f24">
+
+  <!-- Favicons -->
+  <link href="/static/img/websiteuploads/favicon.png" rel="icon">
+  <link href="/static/img/websiteuploads/favicon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <!-- Template Main CSS File -->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/admin.css" rel="stylesheet">
+  <link href="/static/css/tabs.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="/"><img src="/static/img/websiteuploads/PakvACC_logo.png" style="width: 120px; height: 50px;"
+          class="logo"></a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto" href="/">Home</a></li>
+          <li class="dropdown"><a href="#"><span>INFO</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li class="dropdown"><a href="#"><span>Policies</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  {% for p in policies %}
+                  <li><a href="{{ p.policy_link }}" target="_blank">{{ p.policy_name }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li><a href="/about-us">About Us</a></li>
+              <li><a href="/airspace">Airspace</a></li>
+              <li><a href="/notams/all">NOTAMS</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href=""><span>Controllers</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/controllers/roster">Roster</a></li>
+              <li><a href="/controllers/solo-validations">Solo Validations</a></li>
+              <li><a href="/controllers/top">Top Controllers</a></li>
+              <li class="dropdown"><a href="#"><span>Resources</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="https://files.aero-nav.com/OPXX" target="_blank">Sector Files</a></li>
+                  <li class="dropdown"><a href="#"><span>vATIS Files</span> <i class="bi bi-chevron-right"></i></a>
+                    <ul>
+                      <li><a href="/controllers/resources/vatis/opis" target="_blank">OPIS - Islamabad</a></li>
+                      <li><a href="/controllers/resources/vatis/opla" target="_blank">OPLA - Lahore</a></li>
+                      <li><a href="/controllers/resources/vatis/opkc" target="_blank">OPKC - Karachi</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Pilots</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/airfields-info">Airfields Info</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="/contact-us">Contact Us</a></li>
+          {% if is_logged_in == "False" %}
+          <li><a class="getstarted scrollto" href="/auth/login">Login</a></li>
+          {% else %}
+          <li class="dropdown"><a class="getstarted scrollto" style="cursor: pointer;">Hello, {{ name }}<i
+                class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/my/profile">My Profile</a></li>
+              {% if check_admin == "True" %}
+              <li><a href="/admin">Administration</a></li>
+              {% endif %}
+              <li><a href="/auth/logout">Logout</a></li>
+            </ul>
+          </li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
+
+
+
+  <main id="main">
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h4>Administrator</h4>
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>Admin</li>
+          </ol>
+        </div>
+      </div>
+    </section><!-- End Breadcrumbs -->
+    <br><br>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    {% if category == 'error' %}
+    <div class="alert alert-danger alert-dismissable fade show">
+      {{ message }}
+    </div>
+    {% elif category == 'success' %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+      {{ message }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="tabs">
+      <ul id="tab-links">
+        <li style="font-size: 14px;"><a href="#tab-1" class="active" title="Home">Home</a></li>
+        <li style="font-size: 14px;"><a href="#tab-2" title="Policies">Policies</a></li>
+        <li style="font-size: 14px;"><a href="#tab-3" title="Staff">Staff</a></li>
+        <li style="font-size: 14px;"><a href="#tab-4" title="System Log">System Log</a></li>
+        <li style="font-size: 14px;"><a href="#tab-5" title="Search">Search</a></li>
+        <li style="font-size: 14px;"><a href="#tab-6" title="Media Library">Media Library</a></li>
+        <li style="font-size: 14px;"><a href="#tab-7" title="NOTAMS">NOTAMS</a></li>
+      </ul>
+
+      <section id="tab-1" class="active">
+        <br><br><br><br><br>
+        <i class="fas fa-home"></i>
+        <br><br>
+        <h3 style="text-align: center;">Hello, Mr. {{ name }}</h3>
+        <br>
+        <p style="text-align: center;">Today is a very nice day, <span style="font-style: italic;">I
+            think</span>, below you can find the number of
+          people who have logged in and linked Discord accounts. You can do much more check it out, I didn't
+          felt like typing everything you can do.
+        </p>
+        <p style="font-size: 17px; text-align: center;"><strong>Users: </strong>{{ users }}</p>
+        <p style="font-size: 17px; text-align: center;"><strong>Discord accounts linked: </strong>{{
+          discord_accounts }}</p>
+      </section>
+
+      <section id="tab-2" style="width: 80rem;">
+        <div class="dimmer"></div>
+        <br><br><br><br>
+        <i class="fas fa-book"></i>
+        <h4>Policies</h4>
+        <p>You can add or remove policies from here. They will be reflected across the website on the
+          header.</p>
+        <a href="javascript:void()" id="open-popup-btn" class="open-popup-btn"><button class="modal__button1">Add
+            Policy</button></a>
+        <div class="popup center1">
+          <div class="icon">
+            <i class="fas fa-book" style="font-size: 20px;"></i>
+          </div>
+          <div class="title">
+            New Policy
+          </div>
+          <form action="/admin/policy/add" method="post" enctype="multipart/form-data">
+            <div class="description">
+              <div class="col-md-12"><label class="labels">Policy Name</label><input type="text"
+                  class="form-control text-black-50" name="policy_name">
+              </div>
+              <br>
+              <input class="form-control form-control" id="policy" name="policy" type="file">
+              <div class="dismiss-btn">
+                <br>
+                <button type="submit" class="addbutton">Submit</button>
+              </div>
+            </div>
+          </form>
+
+          <div class="dismiss-btn">
+            <button id="dismiss-popup-btn" class="dismiss-popup-btn">
+              Dismiss
+          </div>
+        </div>
+        <br><br>
+        <form action="/admin/policy/remove" method="post">
+          <select name="group" id="group" class="form-control">
+            <option disabled selected value="0">Remove Policies</option>
+            {% for p in policies %}
+            <option value="{{ p.id }}">{{ p.policy_name }}</option>
+            {% endfor %}
+          </select>
+          <br>
+          <div class="dismiss-btn"> <button type="submit" class="rembutton">Remove</button></div>
+        </form>
+      </section>
+
+      <section id="tab-3">
+        <br><br><br><br>
+        <i class="fas fa-user-shield"></i>
+        <h4>Add or Remove Staff </h4>
+        <p style="font-size: 15px;">On this page you can add or remove staff members. Adding them here, will
+          automatically add them
+          into the about us page of the website. Removing them will remove them from the same.</p>
+        <div class="dimmer"></div>
+
+        <a href="javascript:void()" id="open1-popup1-btn1" class="open1-popup1-btn1"><button class="modal__button1">Appoint
+            Staff</button></a>
+        <div class="popup1 center1">
+          <div class="icon">
+            <i class="fas fa-user-plus" style="font-size:20px;"></i>
+          </div>
+          <div class="title">
+            Appoint Staff Member
+          </div>
+          <form action="/admin/staff/appoint" method="post">
+            <div class="description">
+              <div class="col-md-12"><label class="labels">VATSIM ID</label><input type="text"
+                  class="form-control text-black-50" name="staff_vatsim_id">
+              </div>
+              <br>
+              <div class="col-md-12"><label class="labels">Staff Position</label><input type="text"
+                  class="form-control text-black-50" name="staff_position">
+              </div>
+              <br>
+              <label class="labels">Staff Callsign</label>
+              <select name="callsign" id="callsign" class="form-control">
+                <option disabled selected value="0">Callsign</option>
+                {% for sp in staff_positions %}
+                <option value="{{ sp.staff_callsign }}">{{ sp.staff_callsign }}</option>
+                {% endfor %}
+              </select>
+              <div class="dismiss-btn">
+                <br>
+                <button type="submit" class="addbutton">Appoint</button>
+              </div>
+            </div>
+          </form>
+
+          <div class="dismiss-btn">
+            <button id="dismiss1-popup1-btn1" class="dismiss1-popup1-btn1">
+              Dismiss
+          </div>
+        </div>
+        <br><br>
+        <form action="/admin/staff/remove" method="post">
+          <select name="group" id="group" class="form-control">
+            <option disabled selected value="0">Remove Staff</option>
+            {% for s in staffs %}
+            <option value="{{ s.id }}">{{ s.staff_name }}</option>
+            {% endfor %}
+          </select>
+          <br>
+          <div class="dismiss-btn"> <button type="submit" class="rembutton">Remove</button></div>
+        </form>
+      </section>
+
+
+      <section id="tab-6" style="width: 80rem;">
+        <div class="dimmer"></div>
+        <i class="far fa-images"></i>
+        <br>
+        <h3 style="text-align: center;">Upload Media</h3>
+        <ul class="grid" style="overflow-y: auto;height: 400px;">
+          {% for u in uploads %}
+          <li>
+            <figure class="grid__figure">
+              <a href="{{ u.link }}" target="_blank"><img src="{{ u.link }}" alt="img"></a>
+              <figcaption>Used for: {{ u.name }}, Used in homepage? {{ u.homepage }} </figcaption>
+            </figure>
+            <a href="/admin/delete/media/{{ u.id }}">
+              <div class="dismiss-btn"> <button type="submit" class="rembutton1">Delete</button></div>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+
+        <div class="popup2 center1">
+          <div class="icon">
+            <i class="far fa-images" style="font-size: 20px;"></i>
+          </div>
+          <div class="title">
+            Upload Media
+          </div>
+          <form action="/admin/upload/media" method="post" enctype="multipart/form-data">
+            <div class="description">
+              <div class="col-md-12" style="margin-top: 15px;"></label><input type="text"
+                  placeholder="Use? Ex. PAK Logo" class="form-control text-black-50" name="name">
+              </div>
+              <br>
+              <input class="form-control form-control" id="media" name="media" type="file">
+              <br>
+              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" value="1"
+                name="homepage" id="homepage">
+              <label class="form-check-label" for="flexSwitchCheckChecked">Homepage this screenshot</label>
+              <div class="dismiss-btn">
+                <br>
+                <button type="submit" class="addbutton">Upload</button>
+              </div>
+            </div>
+          </form>
+          <div class="dismiss-btn">
+            <a href="javascript:void()"><button id="dismiss2-popup2-btn2" class="dismiss2-popup2-btn2">
+                Dismiss</button></a>
+          </div>
+        </div>
+        <br><br>
+        <div class="dismiss-btn excel">
+          <button type="submit" id="open2-popup2-btn2" class="open2-popup2-btn2 addbutton">Upload </button>
+        </div>
+      </section>
+
+      <section id="tab-7" style="width: 80rem;">
+        <h3>NOTAMS</h3>
+        <p>Add or delete NOTAMS from here.</p>
+        <form action="/admin/notam/add" method="post">
+
+          <select name="group" id="group" class="form-control">
+            <option disabled selected value="0">Select an airfield</option>
+            <option value="OPLA">OPLA</option>
+            <option value="OPKC">OPKC</option>
+            <option value="OPIS">OPIS</option>
+            <option value="OPPS">OPPS</option>
+            <option value="OPQT">OPQT</option>
+            <option value="OPFA">OPFA</option>
+            <option value="OPMT">OPMT</option>
+            <option value="OPST">OPST</option>
+            <option value="OPSD">OPSD</option>
+            <option value="OPLR">OPLR</option>
+            <option value="OPKR">OPKR</option>
+          </select>
+
+          <div class="col-md-12" style="margin-top: 15px;"></label><input type="text" placeholder="NOTAM #"
+              class="form-control" name="notamcode">
+          </div>
+          <div class="col-md-12" style="margin-top: 15px;">
+            <textarea name="notam"></textarea>
+          </div>
+          <div class="col-md-12" style="margin-top: 15px;"></label><input type="text" placeholder="NOTAM Start date"
+              class="form-control" id="start_date" name="notamstart">
+          </div>
+          <div class="col-md-12" style="margin-top: 15px;"></label><input type="text" placeholder="NOTAM End date"
+              class="form-control" id="end_date" name="notamend">
+          </div>
+          <br>
+          <div class="form-check" style="text-align: left;">
+            <input class="form-check-input" type="checkbox" value="1" id="permanent_notam" name="permanent_notam">
+            <label class="form-check-label" for="flexCheckDefault">
+              Permanent NOTAM?
+            </label>
+          </div>
+          <div class="dismiss-btn"> <button type="submit" class="addbutton">Add NOTAM</button></div>
+          <br>
+        </form>
+        <form action="/admin/notam/delete" method="post">
+          <select name="group" id="group" class="form-control">
+            <option disabled selected value="0">Delete NOTAM</option>
+            {% for n in notams %}
+            <option value="{{ n.id }}">{{ n.icao }} - {{ n.notam_code }}</option>
+            {% endfor %}
+          </select>
+          <br>
+          <div class="dismiss-btn"> <button type="submit" class="rembutton">Remove</button></div>
+        </form>
+
+
+      </section>
+    </div>
+    <br><br>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <img src="/static/img/websiteuploads/PakvACC_logo.png" style="width: 120px; height: 50px;">
+              <br>
+              <div class="social-links mt-3">
+                <a href="https://twitter.com/vatsimpakistan" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://www.facebook.com/vatsimpakistan" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/vatsimpakistan" class="instagram"><i
+                    class="bx bxl-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/about-us">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/contact-us">Contact us</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+            <script type="text/javascript"
+              src="//rf.revolvermaps.com/0/0/6.js?i=5g4sxx1dp47&amp;m=8&amp;c=baff00&amp;cr1=ff0000&amp;f=verdana&amp;l=1"
+              async="async"></script>
+          </div>
+        </div>
+      </div>
+      <p style="text-align: center; font-size: 13px;">Disclaimer: All materials contained herein are
+        intended for the exclusive use of flight simulation only and not be used for real world applications.
+        VATSIM Pakistan vACC is not affiliated with CAA or any real world aviation organization.</p>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        <p id="time" class="time">What time is it?</p>
+        &copy; Copyright <strong><span>VATSIM Pakistan vACC</span></strong>. All Rights Reserved <br><br>
+        <a href="//www.dmca.com/Protection/Status.aspx?ID=77696419-0390-47af-a188-c6f8cdc3da0a" target="_blank"
+          title="DMCA.com Protection Status" class="dmca-badge"> <img
+            src="https://images.dmca.com/Badges/dmca-badge-w100-5x1-06.png?ID=77696419-0390-47af-a188-c6f8cdc3da0a"
+            alt="DMCA.com Protection Status" /></a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/static/vendor/purecounter/purecounter.js"></script>
+  <script src="/static/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="/static/js/404.js"></script>
+  <script>
+    const utctime = document.getElementById('time')
+    function updatetime() {
+      const nowtime = new Date().toUTCString()
+
+      utctime.innerHTML = nowtime
+    }
+    setInterval(updatetime, 1000);
+
+    });
+  </script>
+</script>
+  <script src="/static/standardck/ckeditor.js"></script>
+  <script>
+    CKEDITOR.replace('notam');
+  </script>
+  <script>
+    $('#permanent_notam').change(function () {
+      if (this.checked) {
+        $('#end_date').prop('disabled', true);
+      } else {
+        $('#end_date').prop('disabled', false);
+      }
+    });
+    </script>
+</body>
+
+</html >

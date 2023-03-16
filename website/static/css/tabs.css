@@ -1,0 +1,65 @@
+.tabs h1,h2,h3,h4,h5 {
+    text-align: center;
+  }
+  .tabs {
+    position: relative;
+    height: 962px;
+    max-width: 60rem;
+    display: flex;
+    justify-content: center;
+    padding: 3rem;
+  }
+
+@media (max-width: 1920px){
+  .tabs{
+    left: 15%;
+    max-width: 80rem;
+  }
+}
+@media (max-width: 1366px){
+  .tabs{
+    left: 14.5%;
+    max-width: 60rem;
+
+  }
+}
+@media (max-width: 600px){
+  .tabs{
+    left: 1%;
+    max-width: 50rem;
+  }
+}
+  
+  .tabs > ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .tabs > ul li {
+    display: block;
+    text-align: center;
+  }
+  .tabs > ul li a {
+    display: block;
+    text-decoration: none;
+    background: #5a5a5a;
+    padding: 3.02rem 1.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.2s ease-in-out;
+  }
+  .tabs > ul li a.active {
+    background: #5c9f24;
+    color: #2C2C2C;
+  }
+  .tabs > ul li a:hover:not(.active) {
+    color: #fff;
+  }
+  .tabs section {
+    background: rgb(218, 218, 218);
+    padding: 1.5rem 2.5rem;
+    display: none;
+    text-align:center;
+  }
+  
+  .tabs section.active {
+    display: block;
+  }

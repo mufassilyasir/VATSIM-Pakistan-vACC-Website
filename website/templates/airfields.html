@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Airfield Information - VATSIM Pakistan vACC</title>
+    <meta content="Airfield Information - VATSIM Pakistan vACC" name="description">
+    <meta property="og:image" content="/static/img/websiteuploads/PakvACC_logo.png"/>
+    <meta name="theme-color" content="#5c9f24">
+
+    <!-- Favicons -->
+    <link href="/static/img/websiteuploads/favicon.png" rel="icon">
+    <link href="/static/img/websiteuploads/favicon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="/static/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="/static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!-- Template Main CSS File -->
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/airfields.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="/"><img src="/static/img/websiteuploads/PakvACC_logo.png" style="width: 120px; height: 50px;"
+          class="logo"></a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto" href="/">Home</a></li>
+          <li class="dropdown"><a href="#"><span>INFO</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li class="dropdown"><a href="#"><span>Policies</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  {% for p in policies %}
+                  <li><a href="{{ p.policy_link }}" target="_blank">{{ p.policy_name }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li><a href="/about-us">About Us</a></li>
+              <li><a href="/airspace">Airspace</a></li>
+              <li><a href="/notams/all">NOTAMS</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href=""><span>Controllers</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/controllers/roster">Roster</a></li>
+              <li><a href="/controllers/solo-validations">Solo Validations</a></li>
+              <li><a href="/controllers/top">Top Controllers</a></li>
+              <li class="dropdown"><a href="#"><span>Resources</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="https://files.aero-nav.com/OPXX" target="_blank">Sector Files</a></li>
+                  <li class="dropdown"><a href="#"><span>vATIS Files</span> <i class="bi bi-chevron-right"></i></a>
+                    <ul>
+                      <li><a href="/controllers/resources/vatis/opis" target="_blank">OPIS - Islamabad</a></li>
+                      <li><a href="/controllers/resources/vatis/opla" target="_blank">OPLA - Lahore</a></li>
+                      <li><a href="/controllers/resources/vatis/opkc" target="_blank">OPKC - Karachi</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+          </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Pilots</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/airfields-info">Airfields Info</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="/contact-us">Contact Us</a></li>
+          {% if is_logged_in == "False" %}
+          <li><a class="getstarted scrollto" href="/auth/login">Login</a></li>
+          {% else %}
+          <li class="dropdown"><a class="getstarted scrollto" style="cursor: pointer;">Hello, {{ name }}<i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/my/profile">My Profile</a></li>
+              {% if check_admin == "True" %}
+              <li><a href="/admin">Administration</a></li>
+              {% endif %}
+              <li><a href="/auth/logout">Logout</a></li>
+            </ul>
+          </li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
+
+
+
+    <main id="main">
+        <!-- ======= Breadcrumbs ======= -->
+        <section class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>Airfield Information</h4>
+                    <ol>
+                        <li><a href="/">Home</a></li>
+                        <li>Airfields Info</li>
+                    </ol>
+                </div>
+            </div>
+        </section><!-- End Breadcrumbs -->
+        <section id="services" class="services">
+
+            <div class="section-title">
+                <h2>Airfields</h2>
+                <p style="font-family: roboto; font-size: 17px;">Wanna get airborne, well you need to find an Airfield. Find what you are looking for here.</p>
+                
+                <div class="card">
+                <div class="container filtering">
+                    <div class="filter-cat row">
+                        <div class="col col-md-5 col-xs-6">
+                            <select class="form-control" style="margin-left: 230px; width: 390px;">
+                                <option value="" selected disabled>Select an airfield</option>
+                                <option value="cat-opla">OPLA - Allama Iqbal International Airport, Lahore</option>
+                                <option value="cat-opkc">OPKC - Jinnah International Airport, Karachi</option>
+                                <option value="cat-opis">OPIS - Islamabad International Airport, Islamabad</option>
+                                <option value="cat-opps">OPPS - Bacha Khan International Airport, Peshawar</option>
+                                <option value="cat-opqt">OPQT - Quetta International Airport, Quetta</option>
+                                <option value="cat-opfa">OPFA - Faisalabad International Airport, Faisalabad</option>
+                                <option value="cat-opmt">OPMT - Multan International Airport, Multan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row filter-cat-results">
+                        <div class="f-cat" data-cat="cat-opla">
+                            <h3>Allama Iqbal International Airport</h3>
+                            <br>
+                            <img src="/static/img/websiteuploads/AllamaIqbalAirport.png" style="width: 300px;">
+                            <br><br>
+                            <p style="font-size: 15px;">Allama Iqbal International Airport (Urdu: علامہ اقبال بین الاقوامی ہوائی اڈا, IATA: LHE, ICAO: OPLA) is the second largest 
+                              civilian airport by traffic in Pakistan, serving Lahore, capital of Punjab and second-largest city of Pakistan. 
+                              It also serves a large portion of the travelers from the other regions of Punjab province. 
+                              Originally known as Lahore International Airport, it was renamed after the poet philosopher Muhammad Iqbal, 
+                              one of the pioneers that led to the creation of Pakistan. The airport has three terminals: 
+                              the Allama Iqbal terminal, the Hajj terminal and a cargo terminal.</p>
+                            <br>
+                            <h4 style="text-align: center;">Sceneries</h4>
+                            <table class="table table-sm w-100">
+                              <thead class="tables">
+                                  <tr>
+                                      <th scope="col">Prepar3D</th>
+                                      <th scope="col">X-Plane 11</th>
+                                      <th scope="col">FSX</th>
+                                      <th scope="col">MSFS</th>
+                                  </tr>
+                              </thead>
+                              <tbody class="some" id="some">
+                                  <tr>
+                                      <td><span style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://library.avsim.net/esearch.php?DLID=184486" target="_blank">Prepar3D (Freeware)</span></a></td>
+                                      <td><span style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://forums.x-plane.org/index.php?/files/file/60867-opla-full-scenery-allama-iqbal-int-lahore" target="_blank">X-Plane 11 (Freeware)</span></a></td>
+                                      <td><span style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://library.avsim.net/esearch.php?DLID=184486" target="_blank">FSX (Freeware)</span></a></td>
+                                      <td><span style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://forums.x-plane.org/index.php?/files/file/60867-opla-full-scenery-allama-iqbal-int-lahore" target="_blank">X-Plane 11 (Freeware)</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                    <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                    <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/msk-allama-iqbal-intl-lahore-opla-2016-fsx-fsxse-p3d.phtml" target="_blank">FSX (Payware)</p></a></td>
+                                    <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                </tr>
+                              </tbody>
+                          </table>
+                            <h4 style="text-align: center;">Charts</h4>
+                            <p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://vats.im/pak/opla_charts" target="_blank">Lahore Charts</p></a>
+
+                        </div>
+                        <div class="f-cat" data-cat="cat-opkc">
+                            <h3>Jinnah International Airport</h3>
+                            <br>
+                            <img src="/static/img/websiteuploads/jinnahterminal.png" alt="jinnahterminal" style="width: 300px;">
+                            <br><br>
+                            <p style="font-size: 15px;">Jinnah International Airport (Urdu: جناح بین الاقوامی ہوائی اڈا) (IATA: KHI, ICAO: OPKC), formerly Drigh Road Airport, is Pakistan's busiest international and domestic airport, and handled 7,267,582 passengers in 2017–2018. 
+                              Located in Karachi, the largest city and commercial capital of Pakistan and capital of the province of Sindh, it is named after Muhammad Ali Jinnah, the founder of Pakistan.
+                              
+                              The airport is managed by the Civil Aviation Authority (CAA), and serves as a hub for the national flag carrier, Pakistan International Airlines (PIA), Airblue, and many other private airlines. The airport is equipped with aircraft engineering and overhauling facilities including the Ispahani Hangar for wide-body aircraft.</p>
+                            <br>
+                              <h4 style="text-align: center;">Sceneries</h4>
+                            <table class="table table-sm w-100">
+                              <thead class="tables">
+                                  <tr>
+                                      <th scope="col">Prepar3D</th>
+                                      <th scope="col">X-Plane 11</th>
+                                      <th scope="col">FSX</th>
+                                      <th scope="col">MSFS</th>
+                                  </tr>
+                              </thead>
+                              <tbody class="some" id="some">
+                                  <tr>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://www.flightsim.com/vbfs/fslib.php?searchid=89670430" target="_blank">Prepar3D (Freeware)</p></a></td>
+                                      <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://www.flightsim.com/vbfs/fslib.php?searchid=89670430" target="_blank">FSX (Freeware)</p></a></td>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://flightsim.to/file/19761/opkc-jinnah-intl-airport-karachi-improvement" target="_blank">MSFS2020 (Freeware)</p></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/advanced_search_result.php?keywords=Karachi+P3D" target="_blank">Prepar3D (Payware)</p></a></td>
+                                    <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/msk-jinnah-international-airport-karachi-opkc-x-plane-11.phtml" target="_blank">X-Plane 11 (Payware)</p></a></td>
+                                    <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/msk-allama-iqbal-intl-lahore-opla-2016-fsx-fsxse-p3d.phtml" target="_blank">FSX (Payware)</p></a></td>
+                                    <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                </tr>
+                              </tbody>
+                          </table>
+                            <h4 style="text-align: center;">Charts</h4>
+                            <p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://vats.im/pak/opkc_charts" target="_blank">Karachi Charts</p></a>
+                        </div>
+                        <div class="f-cat" data-cat="cat-opis">
+                            <h3>Islamabad International Airport</h3>
+                            <br>
+                            <img src="/static/img/websiteuploads/islmamabadterminal.png" style="width: 300px;">
+                            <br><br>
+                            <p style="font-size: 15px;">Islamabad International Airport (IATA: ISB, ICAO: OPIS) is the international airport serving Islamabad, the capital city of Pakistan. It is located 25 km west of the city & is accessed through Srinagar Highway.
+
+                              The airport commenced full operations in May 2018, replacing the defunct Benazir Bhutto International Airport which now forms part of the PAF Base Nur Khan. It is the largest airport in Pakistan in terms of area & passenger capacity, capable of serving 9 million passengers yearly. Pakistan Civil Aviation Authority is acquiring 2,833 acres (11.46 km2 / 4.42 sq mi) of land to build a third runway. It is the first and only airport in 
+                              Pakistan capable of handling the Airbus A380.</p>
+                            <br>
+                              <h4 style="text-align: center;">Sceneries</h4>
+                            <table class="table table-sm w-100">
+                              <thead class="tables">
+                                  <tr>
+                                      <th scope="col">Prepar3D</th>
+                                      <th scope="col">X-Plane 11</th>
+                                      <th scope="col">FSX</th>
+                                      <th scope="col">MSFS</th>
+                                  </tr>
+                              </thead>
+                              <tbody class="some" id="some">
+                                  <tr>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://library.avsim.net/esearch.php?DLID=200222" target="_blank">Prepar3D (Freeware)</p></a></td>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://gateway.x-plane.com/airports/OPIS/show" target="_blank">X-Plane 11 (Freeware)</p></a></td>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://library.avsim.net/esearch.php?DLID=200222" target="_blank">FSX (Freeware)</p></a></td>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://flightsim.to/file/19658/opis-islamabad-intl-airport-pakistan" target="_blank">MSFS2020 (Freeware)</p></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/simarc-islamabad-international-airport-opis-p3dv4.4.phtml" target="_blank">Prepar3D (Payware)</p></a></td>
+                                    <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/msk-productions-new-islamabad-international-airport-x-plane-11.phtml" target="_blank">X-Plane 11 (Payware)</p></a></td>
+                                    <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/simarc-islamabad-international-airport-opis-p3dv4.4.phtml" target="_blank">FSX (Payware)</p></a></td>
+                                    <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/simarc-islamabad-international-airport-opis-msfs.phtml" target="_blank">MSFS2020 (Payware)</p></a></td>
+                                </tr>
+                              </tbody>
+                          </table>
+                            <h4 style="text-align: center;">Charts</h4>
+                            <p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://vats.im/pak/opis_charts" target="_blank">Islamabad Charts</p></a>
+                        </div>
+                        <div class="f-cat" data-cat="cat-opps">
+                            <h3>Bacha Khan International Airport</h3>
+                            <br>
+                            <img src="/static/img/websiteuploads/bachakhan.png" style="width: 300px;">
+                            <br><br>
+                            <p style="font-size: 15px;">Bacha Khan International Airport (IATA: PEW, ICAO: OPPS), formerly known as Peshawar International Airport, is an international airport located in Peshawar, Khyber Pakhtunkhwa, Pakistan. Located in the southwestern end of the city of Peshawar, it is the fourth-busiest airport in Pakistan.
+                              One of the main runways of the airport is crossed by a railway line known as the Khyber train safari, which runs to the town of Landi Kotal in the Khyber Pass for the express purpose of tourism. The airport was renamed on 27 January 2012 after Abdul Ghaffar Khan (nicknamed Bacha Khan), a prominent British Indian freedom fighter and later Pakistani Pashtun activist. The airport was extensively reconstructed from 2016 to 2018. </p>
+                            <br>
+                            <h4 style="text-align: center;">Charts</h4>
+                            <p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://vats.im/pak/opps_charts" target="_blank">Peshawar Charts</p></a>
+                        </div>
+                        <div class="f-cat" data-cat="cat-opqt">
+                            <h3>Quetta International Airport</h3>
+                            <br>
+                            <img src="/static/img/websiteuploads/quettaterminal.png" style="width: 330px; height: 205px;">
+                            <br><br>
+                            <p style="font-size: 15px;">Quetta International Airport (Urdu کوئٹہ بین الاقوامی ہوائی اڈہ) (Balochi: کوئٹہ بالی پَٹ) ;(IATA: UET, ICAO: OPQT) is located at Quetta, the provincial capital of Balochistan, Pakistan. The airport is the fourth highest airport in Pakistan (1605 metres above sea level). It is second largest airport in the south region of the country and the largest for the province of Balochistan. It is situated 12 km south-west of the city spread over an area of 35 acres (14 ha). Average scheduled flights were 1332, non-scheduled flights 247, and the total recorded passenger flow was 152,698 in 2007.</p>
+                            <br>
+                            <h4 style="text-align: center;">Sceneries</h4>
+                            <table class="table table-sm w-100">
+                              <thead class="tables">
+                                  <tr>
+                                      <th scope="col">Prepar3D</th>
+                                      <th scope="col">X-Plane 11</th>
+                                      <th scope="col">FSX</th>
+                                      <th scope="col">MSFS</th>
+                                  </tr>
+                              </thead>
+                              <tbody class="some" id="some">
+                                  <tr>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://library.avsim.net/esearch.php?DLID=204567" target="_blank">Prepar3D (Freeware)</p></a></td>
+                                      <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://library.avsim.net/esearch.php?DLID=204567" target="_blank">FSX (Freeware)</p></a></td>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://flightsim.to/file/8815/quetta-opqt" target="_blank">MSFS2020 (Freeware)</p></a></td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                            <h4 style="text-align: center;">Charts</h4>
+                            <p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://vats.im/pak/opqt_charts" target="_blank">Quetta Charts</p></a>
+                        </div>
+                        <div class="f-cat" data-cat="cat-opfa">
+                            <h3>Faisalabad International Airport</h3>
+                            <br>
+                            <img src="/static/img/websiteuploads/faisalabadterminal.png" style="width: 300px; height: 200px;">
+                            <br><br>
+                            <p style="font-size: 15px;">Faisalabad International Airport (IATA: LYP, ICAO: OPFA) is an international airport and standby Pakistan Air Force military base situated on Jhang Road, 10 kilometres (6.2 mi) southwest of the city centre of Faisalabad, in the Punjab province of Pakistan. The airport is home to two flying schools who use the airfield for regular training for new cadets and aviation enthusiasts.
+
+                              The airport serves the population of Faisalabad and several local cities such as Tandlianwala, Kamalia, Jaranwala, Jhang, Chiniot, Gojra, Dijkot, Samundri, Khurrianwala, Sangla Hill, Toba Tek Singh, Chenab Nagar, Sargodha, Bhawana, Pir Mahal, Chak Jhumra, Khichian, Jahangir Klan, and Lalian.</p>
+                            <br>
+                            <h4 style="text-align: center;">Sceneries</h4>
+                            <table class="table table-sm w-100">
+                              <thead class="tables">
+                                  <tr>
+                                      <th scope="col">Prepar3D</th>
+                                      <th scope="col">X-Plane 11</th>
+                                      <th scope="col">FSX</th>
+                                      <th scope="col">MSFS</th>
+                                  </tr>
+                              </thead>
+                              <tbody class="some" id="some">
+                                  <tr>
+                                      <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                      <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                      <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/simarc-faisalabad-international-airport-opfa-msfs.phtml" target="_blank">MSFS2020 (Freeware)</p></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/simarc-faisalabad-international-airport-opfa-p3dv4.4.phtml" target="_blank">Prepar3D (Payware)</p></a></td>
+                                    <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                    <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/simarc-faisalabad-international-airport-opfa-p3dv4.4.phtml" target="_blank">FSX (Payware)</p></a></td>
+                                    <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                </tr>
+                              </tbody>
+                          </table>
+                            <h4 style="text-align: center;">Charts</h4>
+                            <p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://vats.im/pak/opfa_charts" target="_blank">Faisalabad Charts</p></a>
+                        </div>
+                        <div class="f-cat" data-cat="cat-opmt">
+                            <h3>Multan International Airport</h3>
+                            <br>
+                            <img src="/static/img/websiteuploads/multanterminal.png" style="width: 300px;">
+                            <br><br>
+                            <p style="font-size: 15px;">Multan International Airport (IATA: MUX, ICAO: OPMT) is an international airport located 4 km west of Multan, Pakistan. The airport is South Punjab's largest and busiest airport. Multan International Airport offers flights throughout Pakistan, as well as direct flights to Bahrain, Oman, Qatar, Saudi Arabia, and the United Arab Emirates.
+
+                              In March 2015, a new terminal building was formally inaugurated by ex-Prime Minister of Pakistan Nawaz Sharif. Following the opening of the new terminal, passenger traffic soared from 384,571 in 2014–2015, to 904,865 in 2015–2016.</p>
+                            <br>
+                            <h4 style="text-align: center;">Sceneries</h4>
+                            <table class="table table-sm w-100">
+                              <thead class="tables">
+                                  <tr>
+                                      <th scope="col">Prepar3D</th>
+                                      <th scope="col">X-Plane 11</th>
+                                      <th scope="col">FSX</th>
+                                      <th scope="col">MSFS</th>
+                                  </tr>
+                              </thead>
+                              <tbody class="some" id="some">
+                                  <tr>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://www.flightsim.com/vbfs/fslib.php?searchid=89670700" target="_blank">Prepar3D (Freeware)</p></a></td>
+                                      <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                      <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://www.flightsim.com/vbfs/fslib.php?searchid=89670700" target="_blank">FSX (Freeware)</p></a></td>
+                                      <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                  </tr>
+                                  <tr>
+                                    <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/simarc-multan-international-airport-opmt-fsx-p3d.phtml" target="_blank">Prepar3D (Payware)</p></a></td>
+                                    <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                                    <td><p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://secure.simmarket.com/simarc-multan-international-airport-opmt-fsx-p3d.phtml" target="_blank">FSX (Payware)</p></a></td>
+                                    <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; </td>
+                                </tr>
+                              </tbody>
+                          </table>
+                            <h4 style="text-align: center;">Charts</h4>
+                            <p style="text-align: center; font-weight: 700; font-size: 14px;"><a href="https://vats.im/pak/opmt_charts" target="_blank">Multan Charts</p></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <img src="/static/img/websiteuploads/PakvACC_logo.png" style="width: 120px; height: 50px;">
+              <br>
+              <div class="social-links mt-3">
+                <a href="https://twitter.com/vatsimpakistan" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://www.facebook.com/vatsimpakistan" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/vatsimpakistan" class="instagram"><i
+                    class="bx bxl-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/about-us">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/contact-us">Contact us</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+            <script type="text/javascript"
+              src="//rf.revolvermaps.com/0/0/6.js?i=5g4sxx1dp47&amp;m=8&amp;c=baff00&amp;cr1=ff0000&amp;f=verdana&amp;l=1"
+              async="async"></script>
+          </div>
+        </div>
+      </div>
+      <p style="text-align: center; font-size: 13px;">Disclaimer: All materials contained herein are 
+        intended for the exclusive use of flight simulation only and not be used for real world applications. 
+        VATSIM Pakistan vACC is not affiliated with CAA or any real world aviation organization.</p>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        <p id="time" class="time">What time is it?</p>
+        &copy; Copyright <strong><span>VATSIM Pakistan vACC</span></strong>. All Rights Reserved <br><br>
+        <a href="//www.dmca.com/Protection/Status.aspx?ID=77696419-0390-47af-a188-c6f8cdc3da0a" target="_blank"
+          title="DMCA.com Protection Status" class="dmca-badge"> <img
+            src="https://images.dmca.com/Badges/dmca-badge-w100-5x1-06.png?ID=77696419-0390-47af-a188-c6f8cdc3da0a"
+            alt="DMCA.com Protection Status" /></a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+      <img class="back1-to1-top1 d-flex align-items-center justify-content-center" src="/static/img/websiteuploads/santa.png">
+    <!-- Vendor JS Files -->
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="/static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="/static/vendor/php-email-form/validate.js"></script>
+    <script src="/static/vendor/purecounter/purecounter.js"></script>
+    <script src="/static/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/static/js/airfields.js"></script>
+    <script>
+        const utctime = document.getElementById('time')
+        function updatetime() {
+          const nowtime = new Date().toUTCString()
+    
+          utctime.innerHTML = nowtime
+        }
+        setInterval(updatetime, 1000);
+      </script>
+</body>
+
+</html>

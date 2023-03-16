@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>About Us - VATSIM Pakistan vACC</title>
+    <meta content="About Us VATSIM Pakistan vACC" name="description">
+    <meta property="og:image" content="/static/img/websiteuploads/PakvACC_logo.png"/>
+    <meta name="theme-color" content="#5c9f24">
+
+    <!-- Favicons -->
+    <link href="/static/img/websiteuploads/favicon.png" rel="icon">
+    <link href="/static/img/websiteuploads/favicon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="/static/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="/static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!-- Template Main CSS File -->
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/about-us.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="/"><img src="/static/img/websiteuploads/PakvACC_logo.png" style="width: 120px; height: 50px;"
+          class="logo"></a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto" href="/">Home</a></li>
+          <li class="dropdown"><a href="#"><span>INFO</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li class="dropdown"><a href="#"><span>Policies</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  {% for p in policies %}
+                  <li><a href="{{ p.policy_link }}" target="_blank">{{ p.policy_name }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li><a href="/about-us">About Us</a></li>
+              <li><a href="/airspace">Airspace</a></li>
+              <li><a href="/notams/all">NOTAMS</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href=""><span>Controllers</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/controllers/roster">Roster</a></li>
+              <li><a href="/controllers/solo-validations">Solo Validations</a></li>
+              <li><a href="/controllers/top">Top Controllers</a></li>
+              <li class="dropdown"><a href="#"><span>Resources</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="https://files.aero-nav.com/OPXX" target="_blank">Sector Files</a></li>
+                  <li class="dropdown"><a href="#"><span>vATIS Files</span> <i class="bi bi-chevron-right"></i></a>
+                    <ul>
+                      <li><a href="/controllers/resources/vatis/opis" target="_blank">OPIS - Islamabad</a></li>
+                      <li><a href="/controllers/resources/vatis/opla" target="_blank">OPLA - Lahore</a></li>
+                      <li><a href="/controllers/resources/vatis/opkc" target="_blank">OPKC - Karachi</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+          </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Pilots</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/airfields-info">Airfields Info</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="/contact-us">Contact Us</a></li>
+          {% if is_logged_in == "False" %}
+          <li><a class="getstarted scrollto" href="/auth/login">Login</a></li>
+          {% else %}
+          <li class="dropdown"><a class="getstarted scrollto" style="cursor: pointer;">Hello, {{ name }}<i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/my/profile">My Profile</a></li>
+              {% if check_admin == "True" %}
+              <li><a href="/admin">Administration</a></li>
+              {% endif %}
+              <li><a href="/auth/logout">Logout</a></li>
+            </ul>
+          </li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
+
+
+
+    <main id="main">
+         <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+        <div class="container">
+  
+          <div class="d-flex justify-content-between align-items-center">
+            <h4>About Us</h4>
+            <ol>
+              <li><a href="/">Home</a></li>
+              <li>About Us</li>
+            </ol>
+          </div>
+        </div>
+      </section><!-- End Breadcrumbs -->
+        <section id="services" class="services">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>About Us</h2>
+                    <p style="font-family: roboto; font-size: 15px;">Pakistan vACC is a part of West Asia Division in
+                        the Asia Pacific Region of the VATSIM Network.
+                        Our vACC aims to provide air traffic control services for online flight simulation within the
+                        airspace
+                        of the Islamic Republic Of Pakistan. We promote virtual air traffic in our airspace and organize
+                        the
+                        basic and further education of virtual air traffic controllers and pilots.
+                        We are responsible for the Air Traffic Control services inside our airspace on the VATSIM
+                        Network.
+                        From beautiful cities of Islamabad and Lahore to the scenic thrill seeking approaches into
+                        Skardu and
+                        Gilgit, you are guaranteed to have a fun experience in our skies.</p>
+                </div>
+                <div class="section-title">
+                    <br><br>
+                    <h2>What We Strive To Achieve</h2>
+                    <p style="font-family: roboto; font-size: 15px;">We aim to provide a realistic and fun
+                        experience to people who fly in, out and around Pakistan on the VATSIM Network,
+                        by educating individuals with a keen interest and passion for aviation in the
+                        skills of an Air Traffic Controller and other relevant entities. If you seek to learn,
+                        we are happy to have you with us.</p>
+                </div>
+                <div class="section-title">
+                    <br><br>
+                    <h2>STAFF TEAM</h2>
+                    <p style="font-family: roboto; font-size: 15px;">Our efficient and amazingly powerful team, who dedicates their time and effort to keep this well oiled machine running like clockwork.</p>
+                    <div class="row">
+                        {% if len_staff == 1 %}
+                        {% for s in staffs %}
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-box text-center">
+                                <div class="user-pic">
+                                    <img src="{{ s.staff_image_url }}" class="img-fluid" alt="User Pic">
+                                </div>
+                                <h4>{{ s.staff_name }}</h4>
+                                <h6>{{ s.staff_position }}</h6>
+                                <hr>
+                                <p>{{ s.staff_bio_itself }}</p>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% if len_staff == 2 %}
+                        <div class="col-md-2">
+                        </div>
+                        {% for s in staffs %}
+                        <div class="col-md-4">
+                            <div class="card-box text-center">
+                                <div class="user-pic">
+                                    <img src="{{ s.staff_image_url }}" class="img-fluid" alt="User Pic">
+                                </div>
+                                <h4>{{ s.staff_name }}</h4>
+                                <h6>{{ s.staff_position }}</h6>
+                                <hr>
+                                <p>{{ s.staff_bio_itself }}</p>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% if len_staff == 3 %}
+                        {% for s in staffs %}
+                        <div class="col-md-4">
+                            <div class="card-box text-center">
+                                <div class="user-pic">
+                                    <img src="{{ s.staff_image_url }}" class="img-fluid" alt="User Pic">
+                                </div>
+                                <h4>{{ s.staff_name }}</h4>
+                                <h6>{{ s.staff_position }}</h6>
+                                <hr>
+                                <p>{{ s.staff_bio_itself }}</p>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% if len_staff == 4 %}
+                        {% for s in staffs %}
+                        {% if s.staff_callsign != "ACCPAK3" %}
+                        {% if s.staff_callsign != "ACCPAK4" %}
+                        <div class="col-md-4">
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                        <div class="col-md-4">
+                            <div class="card-box text-center">
+                                <div class="user-pic">
+                                    <img src="{{ s.staff_image_url }}" class="img-fluid" alt="User Pic">
+                                </div>
+                                <h4>{{ s.staff_name }}</h4>
+                                <h6>{{ s.staff_position }}</h6>
+                                <hr>
+                                <p>{{ s.staff_bio_itself }}</p>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+        </section>
+
+    </main>
+
+     <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <img src="/static/img/websiteuploads/PakvACC_logo.png" style="width: 120px; height: 50px;">
+              <br>
+              <div class="social-links mt-3">
+                <a href="https://twitter.com/vatsimpakistan" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://www.facebook.com/vatsimpakistan" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/vatsimpakistan" class="instagram"><i
+                    class="bx bxl-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/about-us">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/contact-us">Contact us</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+            <script type="text/javascript"
+              src="//rf.revolvermaps.com/0/0/6.js?i=5g4sxx1dp47&amp;m=8&amp;c=baff00&amp;cr1=ff0000&amp;f=verdana&amp;l=1"
+              async="async"></script>
+          </div>
+        </div>
+      </div>
+      <p style="text-align: center; font-size: 13px;">Disclaimer: All materials contained herein are 
+        intended for the exclusive use of flight simulation only and not be used for real world applications. 
+        VATSIM Pakistan vACC is not affiliated with CAA or any real world aviation organization.</p>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        <p id="time" class="time">What time is it?</p>
+        &copy; Copyright <strong><span>VATSIM Pakistan vACC</span></strong>. All Rights Reserved <br><br>
+        <a href="//www.dmca.com/Protection/Status.aspx?ID=77696419-0390-47af-a188-c6f8cdc3da0a" target="_blank"
+          title="DMCA.com Protection Status" class="dmca-badge"> <img
+            src="https://images.dmca.com/Badges/dmca-badge-w100-5x1-06.png?ID=77696419-0390-47af-a188-c6f8cdc3da0a"
+            alt="DMCA.com Protection Status" /></a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+      <img class="back1-to1-top1 d-flex align-items-center justify-content-center" src="/static/img/websiteuploads/santa.png">
+    <!-- Vendor JS Files -->
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="/static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="/static/vendor/php-email-form/validate.js"></script>
+    <script src="/static/vendor/purecounter/purecounter.js"></script>
+    <script src="/static/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="/static/js/404.js"></script>
+    <script>
+      const utctime = document.getElementById('time')
+      function updatetime() {
+        const nowtime = new Date().toUTCString()
+  
+        utctime.innerHTML = nowtime
+      }
+      setInterval(updatetime, 1000);
+    </script>
+</body>
+
+</html>

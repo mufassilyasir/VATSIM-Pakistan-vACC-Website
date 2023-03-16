@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Error 403 - VATSIM Pakistan vACC</title>
+  <meta content="VATSIM Pakistan vACC" name="description">
+  <meta property="og:image" content="/static/img/websiteuploads/PakvACC_logo.png"/>
+  <meta name="theme-color" content="#5c9f24">
+
+  <!-- Favicons -->
+  <link href="/static/img/websiteuploads/favicon.png" rel="icon">
+  <link href="/static/img/websiteuploads/favicon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <!-- Template Main CSS File -->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/404.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="/"><img src="/static/img/websiteuploads/PakvACC_logo.png" style="width: 120px; height: 50px;"
+          class="logo"></a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto" href="/">Home</a></li>
+          <li class="dropdown"><a href="#"><span>INFO</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li class="dropdown"><a href="#"><span>Policies</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  {% for p in policies %}
+                  <li><a href="{{ p.policy_link }}" target="_blank">{{ p.policy_name }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li><a href="/about-us">About Us</a></li>
+              <li><a href="/airspace">Airspace</a></li>
+              <li><a href="/notams/all">NOTAMS</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href=""><span>Controllers</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/controllers/roster">Roster</a></li>
+              <li><a href="/controllers/solo-validations">Solo Validations</a></li>
+              <li><a href="/controllers/top">Top Controllers</a></li>
+              <li class="dropdown"><a href="#"><span>Resources</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="https://files.aero-nav.com/OPXX" target="_blank">Sector Files</a></li>
+                  <li class="dropdown"><a href="#"><span>vATIS Files</span> <i class="bi bi-chevron-right"></i></a>
+                    <ul>
+                      <li><a href="/controllers/resources/vatis/opis" target="_blank">OPIS - Islamabad</a></li>
+                      <li><a href="/controllers/resources/vatis/opla" target="_blank">OPLA - Lahore</a></li>
+                      <li><a href="/controllers/resources/vatis/opkc" target="_blank">OPKC - Karachi</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Pilots</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/airfields-info">Airfields Info</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="/contact-us">Contact Us</a></li>
+          {% if is_logged_in == "False" %}
+          <li><a class="getstarted scrollto" href="/auth/login">Login</a></li>
+          {% else %}
+          <li class="dropdown"><a class="getstarted scrollto" style="cursor: pointer;">Hello, {{ name }}<i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/my/profile">My Profile</a></li>
+              {% if check_admin == "True" %}
+              <li><a href="/admin">Administration</a></li>
+              {% endif %}
+              <li><a href="/auth/logout">Logout</a></li>
+            </ul>
+          </li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
+
+
+
+  <main id="main">
+    <!-- ======= Hero Section ======= -->
+    <section id="hero">
+      <div class="hero-container">
+        <div id="heroCarousel" data-bs-interval="6500" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+          <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+          <div class="carousel-inner" role="listbox">
+
+            <!-- Slide 1 -->
+            <div class="carousel-item active" style="background: url(/static/img/websiteuploads/media7.png);">
+              <div class="carousel-container">
+                <div class="carousel-content">
+                  <div class="container">
+                    <div class="row">
+                      <div class="xs-12 md-6 mx-auto">
+                        <div id="countUp">
+                          <div class="number count-box">
+                            <span data-purecounter-start="0" data-purecounter-end="403" data-purecounter-duration="1"
+                              class="purecounter"></span>
+                          </div>
+                          <div class="text">Forbidden</div>
+                          <div class="text">You do not have the required permissions to enter this page. If you believe
+                            this is a mistake contact vACC Staff.</div>
+                          <br>
+                          <div class="text">Go to <a href="/">home?</a></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </section><!-- End Hero -->
+
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <img src="/static/img/websiteuploads/PakvACC_logo.png" style="width: 120px; height: 50px;">
+              <br>
+              <div class="social-links mt-3">
+                <a href="https://twitter.com/vatsimpakistan" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://www.facebook.com/vatsimpakistan" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/vatsimpakistan" class="instagram"><i
+                    class="bx bxl-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/about-us">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/contact-us">Contact us</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+            <script type="text/javascript"
+              src="//rf.revolvermaps.com/0/0/6.js?i=5g4sxx1dp47&amp;m=8&amp;c=baff00&amp;cr1=ff0000&amp;f=verdana&amp;l=1"
+              async="async"></script>
+          </div>
+        </div>
+      </div>
+      <p style="text-align: center; font-size: 13px;">Disclaimer: All materials contained herein are 
+        intended for the exclusive use of flight simulation only and not be used for real world applications. 
+        VATSIM Pakistan vACC is not affiliated with CAA or any real world aviation organization.</p>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        <p id="time" class="time">What time is it?</p>
+        &copy; Copyright <strong><span>VATSIM Pakistan vACC</span></strong>. All Rights Reserved <br><br>
+        <a href="//www.dmca.com/Protection/Status.aspx?ID=77696419-0390-47af-a188-c6f8cdc3da0a" target="_blank"
+          title="DMCA.com Protection Status" class="dmca-badge"> <img
+            src="https://images.dmca.com/Badges/dmca-badge-w100-5x1-06.png?ID=77696419-0390-47af-a188-c6f8cdc3da0a"
+            alt="DMCA.com Protection Status" /></a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/static/vendor/php-email-form/validate.js"></script>
+  <script src="/static/vendor/purecounter/purecounter.js"></script>
+  <script src="/static/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/static/js/404.js"></script>
+  <script>
+    const utctime = document.getElementById('time')
+    function updatetime() {
+      const nowtime = new Date().toUTCString()
+
+      utctime.innerHTML = nowtime
+    }
+    setInterval(updatetime, 1000);
+  </script>
+</body>
+
+</html>

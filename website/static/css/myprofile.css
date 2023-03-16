@@ -1,0 +1,384 @@
+.form-control:focus {
+    box-shadow: none;
+    border-color: #5c9f24
+}
+
+.profile-button {
+    background: #5c9f24;
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #008100
+}
+
+.profile-button:focus {
+    background: #70c32b;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #5c9f24;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #5c9f24;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #5c9f24;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #5c9f24
+}
+
+
+.form-control {
+  font-size: 14px;
+}
+/* Opacity #1 */
+.hover11 figure img {
+	opacity: 1;
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+  
+}
+
+.hover11 figure:hover img {
+	opacity: .4;
+  cursor: pointer;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+        flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 60%;
+    margin: 0 auto;
+  /*   padding: 2em 0em; */
+  }
+  
+
+
+  .btn {
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 40px;
+    max-width: 150px;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 100%;
+  }
+  .btn:hover {
+    text-decoration: none;
+  }
+  
+
+
+  /*=============== GOOGLE FONTS ===============*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  /*========== Colors ==========*/
+  --hue: 240;
+  --first-color: hsl(var(--hue), 16%, 18%);
+  --first-color-alt: hsl(var(--hue), 16%, 12%);
+  --title-color: hsl(var(--hue), 8%, 15%);
+  --text-color: hsl(var(--hue), 8%, 35%);
+  --body-color: hsl(var(--hue), 100%, 99%);
+  --container-color: #FFF;
+
+  /*========== Font and typography ==========*/
+  --body-font: 'Poppins', sans-serif;
+  --big-font-size: 1.5rem;
+  --normal-font-size: .938rem;
+
+  /*========== z index ==========*/
+  --z-modal: 1000;
+}
+
+@media screen and (min-width: 968px) {
+  :root {
+    --big-font-size: 1.75rem;
+    --normal-font-size: 1rem;
+  }
+}
+
+/*=============== BASE ===============*/
+
+
+
+
+button{
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+}
+
+/*=============== MODAL ===============*/
+
+
+.modal{
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+
+.modal__button{
+  display: inline-block;
+  background-color: #5865F2;
+  color: #FFF;
+  padding: 0.2rem 1.3rem;
+  border-radius: .3rem;
+  transition: .3s;
+}
+
+.modal__button:hover{
+  background-color: var(--first-color-alt);
+}
+
+.modal__container{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: hsla(var(--hue), 18%, 75%, .8);
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-items: flex-end;
+  overflow: hidden;
+  transition: all .3s;
+  z-index: var(--z-modal);
+  visibility: hidden;
+  opacity: 0;
+
+  /*=== Effect 3 ===*/
+  /* perspective: 1000px; */
+}
+
+.modal__content{
+  position: relative;
+  background-color: var(--container-color);
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  border-radius: 1rem 1rem 0 0;
+  transition: all .3s;
+
+  /*=== Effect 1 ===*/
+  transform: translateY(10%);
+
+}
+
+.modal__img{
+  width: 150px;
+  margin-bottom: .75rem;
+}
+
+.modal__close{
+  display: inline-flex;
+  background-color: var(--first-color);
+  border-radius: .25rem;
+  color: #FFF;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  cursor: pointer;
+}
+
+.modal__title{
+  font-size: var(--big-font-size);
+  color: var(--title-color);
+  font-weight: 500;
+}
+
+.modal__description{
+  margin-bottom: 1.5rem;
+}
+
+.modal__button-width{
+  width: 90%;
+}
+
+.modal__button-link{
+  display: block;
+  margin: 1rem auto 0;
+  background-color: transparent;
+  color: var(--first-color);
+  font-weight: 500;
+}
+
+/* Show modal */
+.show-modal{
+  visibility: visible;
+  opacity: 1;
+}
+
+.show-modal .modal__content{
+
+  transform: rotateX(0) scale(1) translateY(0);
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For small devices */
+@media screen and (min-width: 576px){
+  .modal__content{
+    margin: auto;
+    width: 380px;
+    border-radius: 1.25rem;
+  }
+
+  .modal__img{
+    width: 170px;
+  }
+}
+
+.title {
+  font-weight: bold;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
+
+
+.center1{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%)
+}
+.popup{
+ 
+  width:350px;
+  height:310px;
+  padding:30px 20px;
+  background: #ddd;
+  box-sizing:border-box;
+  z-index:2;
+  text-align:center;
+  opacity:0;
+  top:-200%;
+  transform:translate(-50%,-50%) scale(0.5);
+  transition:opacity 300ms ease-in-out,top 1000ms ease-in-out, transform 1000ms ease-in-out;
+ 
+}
+.popup.active{
+  opacity:1;
+  top:50%;
+  transform:translate(-50%,-50%) scale(1);
+  transition:transform 300ms cubic-bezier(0.18,0.89,0.43,1.19);
+}
+
+.popup .icon{
+  margin: 5px 0px;
+  width:50px;
+  height:50px;  
+  border: 2px solid #c30000;
+  text-align:center;
+  display:inline-block;
+  border-radius:50%;
+  line-height:55px;
+}
+.popup .title{
+  margin:5px 0px;
+  font-size:22px;
+  font-weight:900;
+}
+.popup .description{
+  color:#222;
+  font-size:15px;
+  padding:5px;
+}
+.popup .dismiss-popup-btn{
+  margin-top:15px;
+}
+.dismiss-popup-btn ,.open-btn button{
+  padding:10px 20px;
+  background-color: #111;
+  color:#f5f5f5;
+  border: 2px solid #111;
+  font-size:16px;
+  font-weight:600;
+  outline:none;
+  border-radius:10px;
+  transition:all 300ms ease-in-out;
+  cursor:pointer;
+}
+
+.buttonunlink {
+  margin-left: 20px;
+  padding:10px 22px;
+  background-color: rgb(175, 8, 8);
+  color:#f5f5f5;
+  border: 2px solid rgb(175, 8, 8);
+  font-size:16px;
+  font-weight:600;
+  outline:none;
+  border-radius:10px;
+  transition:all 300ms ease-in-out;
+  cursor:pointer;
+
+}
+.buttonunlink:hover{
+  color:#111;
+  background:#f5f5f5;
+}
+.dismiss-popup-btn:hover,.open-btn button:hover{
+  color:#111;
+  background:#f5f5f5;
+}
+
+.popup > div{
+  position:relative;
+  top:10px;
+  opacity:0;
+}
+.popup.active > div{
+  top:0px;
+  opacity:1;
+}
+
+.popup.active .icon{
+  transition: all 300ms ease-in-out 250ms;
+}
+.popup.active .title{
+  transition: all 300ms ease-in-out 250ms;
+}
+.popup.active .description{
+  transition: all 300ms ease-in-out 250ms;
+}
+.popup.active .dismiss-btn{
+  transition: all 300ms ease-in-out 400ms;
+}
+
+.dimmer {
+  display: none;
+  background: #000;
+  opacity: 0.70;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
